@@ -11,12 +11,13 @@ app.get('/', (req, res, next) => {
 
 app.post('/cadastro', (req, res, next) => {
     console.log("Cadastro recebido");
-    cadastro.push({
+    cadastros.push({
         name: req.body.txtNome,
         idade: parseInt(req.body.txtIdade),
         uf: req.body.cmbUF
     });
+    console.log(cadastros);
     res.json({ message: "Tudo ok por aqui !", dados: cadastros });
 })
 
-app.listen(3000, () => console.log('Server started on port 3000'));
+app.listen(3001, () => console.log('Server started on port 3001'));
