@@ -1,28 +1,19 @@
 import React from 'react'
-import Header from '../Header'
-import logo from '../logo.svg';
+import logo from '../images/cadastro.png'
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import '../App.css';
+
 
 const Home = () => {
-    const [contador, setContador] = useState(0);
-
-    function increment() {
-        setContador(contador + 1);
-    }
+    
   return (
       <div className="App">
-          <Header title="Header Param" />
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-              <input type="button" value="Clique" onClick={increment} />
-          </p>
-          <p>{contador}</p> cliques !
-          <p>
-              <Link to="/cadastro">Acessar Cadastro</Link>
-          </p>
+      <h1 className='title01'>Cadastro de Clientes</h1>  
+          <div>
+            <img src={logo} alt="sem imagem" />
+          </div>
       </div>
   )
 }
 
-export default Home
+export default Home;
