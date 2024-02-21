@@ -72,7 +72,7 @@ const Form = () => {
         </div>
 
         <div className="mb-3 col-sm-2 row container">
-          <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" className="btn btn-primary">Salvar</button>
         </div>
         
 
