@@ -5,8 +5,14 @@ const cadastros = [];
 app.use(require("cors")());
 app.use(express.json());
 
-app.get('/', (req, res, next) => {
-    res.json(cadastro);
+app.get('/relatorio', async (req, res, next) => {
+    try {
+        const cadastro = await res.send(cadastros);
+        res.send((cadastro));
+    } catch (error) {
+        console.log(error);
+    }
+
 })
 
 app.post('/cadastro', (req, res, next) => {
