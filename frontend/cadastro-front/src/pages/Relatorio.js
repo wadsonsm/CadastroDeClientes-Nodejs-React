@@ -5,44 +5,51 @@ import ApexChart from 'react-apexcharts';
 function Relatorio() {
 
     const [relatorio, setRelatorio] = useState([]);
+    //const [series, setSeries] = useState([]);
+    //const [labels, setLabels] = useState([]);
+    
 
     useEffect(() => {
         axios.get('http://localhost:3001/relatorio')
             .then(response => {
                 setRelatorio(response.data);
-                console.log(JSON.stringify(response))
+                listarUF(response.data);
+                console.log(relatorio)
             }).catch(err => console.log(err.message));
     }, []);
 
-    const options = {
+    const options = { chart: {} };
+    const series = [44, 55, 41, 17, 15];    
+    //const labels = ['A', 'B', 'C', 'D', 'E'];
 
-        chart: {
-            toolbar: {
-                show: false
-            },
-        },
-        xaxis: { type: 'datetime' },
-        yaxis: {
-            tooltip: {
-                enabled: true
-            }
-        }
+    function listarUF(data) {
+        let arr = [];
+        let newIndice;
+        data.forEach(element => {
+            arr.push(element.uf)
+        });
+
+        newIndice = verificaIndice(arr)
+        //console.log(newIndice)
+       // setLabels(newIndice);
     }
 
-    const series = [{
-        data: [{
-            x: relatorio.uf,
-            y: relatorio.idade
-        }]
-    }]
+    function verificaIndice(arr) {
+        let novaArr = arr.filter((este, i) => arr.indexOf(este) === i);
+        //console.log(novaArr);
+        return novaArr
+    }
 
+    function listarValores(data){
+
+    }
 
     return (
         <div>
             <ApexChart
                 options={options}
                 series={series}
-                type='candlestick'
+                type='donut'
                 width={640}
                 height={480}
             />

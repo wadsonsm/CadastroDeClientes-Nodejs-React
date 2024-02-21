@@ -12,7 +12,6 @@ app.get('/relatorio', async (req, res, next) => {
     } catch (error) {
         console.log(error);
     }
-
 })
 
 app.post('/cadastro', (req, res, next) => {
