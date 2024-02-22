@@ -36,7 +36,7 @@ const Form = () => {
     axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
       .then(response => {
         setEstados(response.data);
-        console.log(response.data)
+        //console.log(response.data)
       }).catch(err => console.log(err.message));
   }, []);
 

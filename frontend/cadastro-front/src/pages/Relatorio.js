@@ -6,43 +6,37 @@ function Relatorio() {
 
     const [relatorio, setRelatorio] = useState([]);
     //const [series, setSeries] = useState([]);
-    //const [labels, setLabels] = useState([]);
-    
+    const [label, setLabel] = useState([]);
+
 
     useEffect(() => {
+        const sigla = [];
+        const total = [];
         axios.get('http://localhost:3001/relatorio')
             .then(response => {
                 setRelatorio(response.data);
-                listarUF(response.data);
-                console.log(relatorio)
+                response.data.map(item => {
+                    console.log(item);
+                    sigla.push(item.uf)
+                    total.push(item.idade);
+                });
+            verificaIndice(sigla)
+
+                
             }).catch(err => console.log(err.message));
     }, []);
 
-    const options = { chart: {} };
-    const series = [44, 55, 41, 17, 15];    
-    //const labels = ['A', 'B', 'C', 'D', 'E'];
-
-    function listarUF(data) {
-        let arr = [];
-        let newIndice;
-        data.forEach(element => {
-            arr.push(element.uf)
-        });
-
-        newIndice = verificaIndice(arr)
-        //console.log(newIndice)
-       // setLabels(newIndice);
-    }
+    const series = [44, 55, 13, 43, 22];
+    const options = {
+        chart: { width: 380, type: 'donut' },
+        labels: Array.from(label)
+    };    
 
     function verificaIndice(arr) {
         let novaArr = arr.filter((este, i) => arr.indexOf(este) === i);
-        //console.log(novaArr);
-        return novaArr
+        setLabel(novaArr)
     }
 
-    function listarValores(data){
-
-    }
 
     return (
         <div>
