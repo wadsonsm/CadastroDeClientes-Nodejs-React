@@ -44,3 +44,8 @@ h1 {
 .title01{
   color: #3689C9;
 }
+
+.content {
+  max-width: 660px;
+  margin: 20px auto;
+}
