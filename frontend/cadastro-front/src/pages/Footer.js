@@ -5,8 +5,7 @@ function Footer() {
     
         <footer>
             <div className="navbar fixed-bottom bg-success-subtle text-center p-3" style={{ paddingTop: '30px' }} >
-                © 2024 Copyright: WarDEV Software Development
-            <a className="text-dark" href="https://mdbootstrap.com/" > MDBootstrap.com </a>
+                © 2024 Copyright: WarDEV Software Development            
             </div>
         </footer>    
   )
