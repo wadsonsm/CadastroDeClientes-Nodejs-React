@@ -49,3 +49,8 @@ h1 {
   max-width: 660px;
   margin: 20px auto;
 }
+
+.error {
+  color: red;
+  margin-top: 10px 0;
+}

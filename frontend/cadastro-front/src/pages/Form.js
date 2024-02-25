@@ -1,35 +1,43 @@
 import React, { useState } from 'react'
+import '../App.css';
 import { useEffect } from 'react'
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { object, string } from 'yup';
 
+const schema = object({
+  name: string().required("Nome obrigatório"),
+  txtIdade: string().required("Idade obrigatório"),
+  cmbUF: string().required("Nome obrigatório").min(2, "Você precisa inserir pelos menos 3 caracteres"),
+});
 
 const Form = () => {
-  const [estados, setEstados] = useState([]);
-  const [campos, setCampos] = useState({
-    txtNome: '',
-    txtIdade: 0,
-    cmbUF: '0'
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
   });
+  const [estados, setEstados] = useState([]);
+  const [campos, setCampos] = useState({});
 
-  function handleInputChange(event) {
+  const handleInputChange = (event) => {
     campos[event.target.name] = event.target.value;
     setCampos(campos);
   }
 
-  function handleFormSubmit(event) {
-    event.preventDefault();
+  const handleFormSubmit = (event) => {
+    //event.preventDefault();
     console.log(campos);
 
     axios.post('http://localhost:3001/cadastro', campos).then(response => {
       alert(response.data.dados.length + ' cadastro realizado com sucesso');
-    })
+    })    
 
-    event.target.txtNome.value = ''
-    event.target.txtIdade.value = 0
-    event.target.cmbUF.value = '0'
-
-    setCampos({});
+    setCampos([]);    
+    console.log(campos);
+    console.log(document.id[root])
   }
+  
 
   useEffect(() => {
     axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
@@ -43,22 +51,23 @@ const Form = () => {
     <>
 
       <div className='container mb-3 row' style={{ paddingTop: '30px', paddingLeft: '100px' }}>
-        <form onSubmit={handleFormSubmit}>
-
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
           <div className="mb-3 col-sm-6">
             <label className="form-label"> Nome: </label>
-            <input type='text' className="form-control" name='txtNome' id='txtNome' onChange={handleInputChange} />
+            <input type='text' {...register('name')} className="form-control" name='name' id='name' onChange={handleInputChange} />
+            <span className='error'>{errors.name?.message}</span>
           </div>
 
           <div className="mb-3 col-sm-6">
             <div className='row'>
               <div className='col-sm'>
                 <label className="form-label"> Idade:</label>
-                <input type='number' className="form-control" min={0} name='txtIdade' id='txtIdade' onChange={handleInputChange} />
+                <input type='number' {...register('txtIdade')} className="form-control" min={0} name='txtIdade' id='txtIdade' onChange={handleInputChange} />
+                <span className='error'>{errors.txtIdade?.message}</span>
               </div>
               <div className='col-sm'>
                 <label className="form-label"> UF: </label>
-                <select className="form-select" name='cmbUF' id='cmbUF' onChange={handleInputChange}>
+                <select className="form-select" {...register('cmbUF')} name='cmbUF' id='cmbUF' onChange={handleInputChange}>
                   <option value="0">Selecione uma opção</option>
                   {
                     estados.map((estado, index) => (
@@ -66,6 +75,7 @@ const Form = () => {
                     ))
                   }
                 </select>
+                <span className='error'>{errors.cmbUF?.message}</span>
               </div>
             </div>
           </div>
@@ -76,7 +86,7 @@ const Form = () => {
 
 
         </form>
-        
+
       </div>
     </>
   )

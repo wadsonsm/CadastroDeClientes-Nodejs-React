@@ -1,11 +1,11 @@
 import React from 'react'
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import './App.css';
-
 import Home from './pages/Home';
 import Form from './pages/Form';
 import Relatorio from './pages/Relatorio';
 import { Link } from 'react-router-dom';
+
 
 const Router = () => {
   return (
