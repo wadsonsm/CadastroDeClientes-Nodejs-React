@@ -3,6 +3,7 @@ import axios from 'axios';
 import ApexChart from 'react-apexcharts';
 import { useReactToPrint } from 'react-to-print';
 import '../App.css';
+import thinkIcon from '../images/thinking-22063.png'
 
 function Relatorio() {
 
@@ -11,26 +12,26 @@ function Relatorio() {
         documentTitle:'Clientes gráfico',
         content: () => contentDocument.current
     });
-    const [relatorio, setRelatorio] = useState([]);
-    //const [series, setSeries] = useState([]);
+    const [relatorio, setRelatorio] = useState([]);    
     const [label, setLabel] = useState([]);
     const [sigla, setSigla] = useState([]);
+    const [isVisible, setIsVisible] = useState(true);
 
-
-    useEffect(() => {
-        //const sigla = [];
+    useEffect(() => {        
         const total = [];
         axios.get('http://localhost:3001/relatorio')
             .then(response => {
                 setRelatorio(response.data);
-                response.data.map(item => {
-                    console.log(item);
-                    setSigla(item.uf)
-                    total.push(item.idade);
-                });
-                verificaIndice(sigla)
-
-
+                console.log(response.data.length)
+                if (response.data.length == 0) {
+                    setIsVisible(false);
+                }
+                // response.data.map(item => {
+                //     console.log(item);
+                //     setSigla(item.uf)
+                //     total.push(item.idade);
+                // });
+                //verificaIndice(sigla)
             }).catch(err => console.log(err.message));
     }, []);
 
@@ -45,21 +46,29 @@ function Relatorio() {
         setLabel(novaArr)
     }
 
-
     return (
         <div className='container'>
-            <div className='actions'>
-                <button className='btn btn-primary' onClick={handlePrint}>Imprimir</button>
-            </div>
-            <div ref={contentDocument} className='content'>
-                <ApexChart
-                    options={options}
-                    series={series}
-                    type='donut'
-                    width={640}
-                    height={480}
-                />            
-            </div>
+            {
+                isVisible ?
+                    <>
+                        <div className='actions'>
+                            <button className='btn btn-primary' onClick={handlePrint}>Imprimir</button>
+                        </div>
+                        <div ref={contentDocument} className='content'>
+                            <ApexChart
+                                options={options}
+                                series={series}
+                                type='donut'
+                                width={640}
+                                height={480}
+                            />
+                        </div>
+                    </>
+                    : 
+                    <div>
+                        <img src={thinkIcon} style={{ width: '25%', margin: "0 350px auto"}} />
+                    </div>
+            }            
         </div>
     )
 }
