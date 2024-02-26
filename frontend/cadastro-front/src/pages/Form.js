@@ -10,7 +10,7 @@ import { object, string } from 'yup';
 const schema = object({
   name: string().required("Nome obrigatório"),
   txtIdade: string().required("Idade obrigatório"),
-  cmbUF: string().required("Nome obrigatório").min(2, "Você precisa inserir pelos menos 3 caracteres"),
+  cmbUF: string().required("UF obrigatória").min(2, "Você precisa escolher uma UF"),
 });
 
 const Form = () => {
@@ -31,11 +31,12 @@ const Form = () => {
 
     axios.post('http://localhost:3001/cadastro', campos).then(response => {
       alert(response.data.dados.length + ' cadastro realizado com sucesso');
-    })    
-
+    });
+    
+    document.getElementsByTagName('form')[0].reset();
     setCampos([]);    
     console.log(campos);
-    console.log(document.id[root])
+    window.location.reload();    
   }
   
 
@@ -54,7 +55,7 @@ const Form = () => {
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <div className="mb-3 col-sm-6">
             <label className="form-label"> Nome: </label>
-            <input type='text' {...register('name')} className="form-control" name='name' id='name' onChange={handleInputChange} />
+            <input type='text' {...register('name')} className="form-control" value={campos.name} name='name' id='name' onChange={handleInputChange} />
             <span className='error'>{errors.name?.message}</span>
           </div>
 
@@ -83,7 +84,6 @@ const Form = () => {
           <div className="mb-3 col-sm-2 row container">
             <button type="submit" className="btn btn-primary">Salvar</button>
           </div>
-
 
         </form>
 
