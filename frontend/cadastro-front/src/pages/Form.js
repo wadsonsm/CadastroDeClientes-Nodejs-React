@@ -50,7 +50,6 @@ const Form = () => {
 
   return (
     <>
-
       <div className='container mb-3 row' style={{ paddingTop: '30px', paddingLeft: '100px' }}>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <div className="mb-3 col-sm-6">
