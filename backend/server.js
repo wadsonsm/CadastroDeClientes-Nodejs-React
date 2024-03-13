@@ -17,7 +17,7 @@ app.get('/relatorio', async (req, res, next) => {
 app.post('/cadastro', (req, res, next) => {
     console.log("Cadastro recebido");
     cadastros.push({
-        name: req.body.txtNome,
+        name: req.body.name,
         idade: parseInt(req.body.txtIdade),
         uf: req.body.cmbUF
     });
