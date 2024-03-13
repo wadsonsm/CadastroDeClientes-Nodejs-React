@@ -15,9 +15,11 @@ function Relatorio() {
 
     const [siglas] = useState([]);
     const [isVisible, setIsVisible] = useState(true);
-    const estado = [];
-    const qtde = [];
-    let pessoa = 1;
+    const [series, setSeries] = useState([]);
+    const options = {
+        chart: { width: 380, type: 'donut' },
+        labels: Array.from(siglas)        
+    };
 
     useEffect(() => {
 
@@ -32,27 +34,25 @@ function Relatorio() {
             }).catch(err => console.log(err.message));
     }, []);
 
-    const series = [1, 2, 3];
-    const options = {
-        chart: { width: 380, type: 'donut' },
-        labels: Array.from(siglas)
-    };
+    
 
     function montaArray(data) {
-        
+
         const totais = [];
         let qtde = 0;
 
         for (let index = 0; index < data.length; index++) {
             //console.log(data[index].uf)
-            if (siglas.find((item) => item === data[index].uf)) {                
-                totais.push(qtde + 1);
+            if (siglas.find((item) => item === data[index].uf)) {
+                totais.splice(index, 0, (qtde++));
             } else {
                 siglas.push(data[index].uf);
-                totais.push(++qtde); 
+                totais.push(++qtde);
             }
         }
-        console.log(siglas)                
+        console.log(siglas)
+        console.log(totais)
+        setSeries(totais)
     }
 
 
