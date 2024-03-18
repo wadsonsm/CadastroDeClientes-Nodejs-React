@@ -18,14 +18,15 @@ function Relatorio() {
     const [series, setSeries] = useState([]);
     const options = {
         chart: { width: 380, type: 'donut' },
-        labels: Array.from(siglas)        
-    };
+        labels: Array.from(siglas)
+    };    
 
     useEffect(() => {
 
         axios.get('http://localhost:3001/relatorio')
             .then(response => {
-                // console.log(response.data)
+                //console.log(response.data)
+        
                 montaArray(response.data);
 
                 if (response.data.length === 0)
@@ -34,23 +35,24 @@ function Relatorio() {
             }).catch(err => console.log(err.message));
     }, []);
 
-    
-
     function montaArray(data) {
 
         const totais = [];
         let qtde = 0;
+        let indice = 0;
 
         for (let index = 0; index < data.length; index++) {
             //console.log(data[index].uf)
             if (siglas.find((item) => item === data[index].uf)) {
-                totais.splice(index, 0, (qtde++));
+                indice = siglas.indexOf(data[index].uf);
+                console.log(totais[indice] = totais[indice]+1)
             } else {
                 siglas.push(data[index].uf);
                 totais.push(++qtde);
+                qtde = 0;
             }
         }
-        console.log(siglas)
+        // console.log(siglas)
         console.log(totais)
         setSeries(totais)
     }
@@ -65,6 +67,7 @@ function Relatorio() {
                             <button className='btn btn-primary' onClick={handlePrint}>Imprimir</button>
                         </div>
                         <div ref={contentDocument} className='content'>
+                            <h1 style={{ color: "#49514D" }}>Relação Clientes/total por estado</h1>
                             <ApexChart
                                 options={options}
                                 series={series}
