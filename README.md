@@ -1,2 +1,2 @@
 # CadastroDeClientes-Nodejs-React
-Crud básico com backend em NodeJs e front utilizando ReactJS.
+Formulário para cadastro de clientes, com validação de dados, inserção em api e geração de gráficos utilizando o React ApexCharts. 
