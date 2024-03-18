@@ -25,10 +25,8 @@ function Relatorio() {
 
         axios.get('http://localhost:3001/relatorio')
             .then(response => {
-                //console.log(response.data)
-        
+                //console.log(response.data)        
                 montaArray(response.data);
-
                 if (response.data.length === 0)
                     setIsVisible(false);
 
@@ -41,8 +39,7 @@ function Relatorio() {
         let qtde = 0;
         let indice = 0;
 
-        for (let index = 0; index < data.length; index++) {
-            //console.log(data[index].uf)
+        for (let index = 0; index < data.length; index++) {            
             if (siglas.find((item) => item === data[index].uf)) {
                 indice = siglas.indexOf(data[index].uf);
                 console.log(totais[indice] = totais[indice]+1)
@@ -52,7 +49,7 @@ function Relatorio() {
                 qtde = 0;
             }
         }
-        // console.log(siglas)
+        console.log(siglas)
         console.log(totais)
         setSeries(totais)
     }
